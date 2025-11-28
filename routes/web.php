@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\MainController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,9 +14,20 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/', [MainController::class, 'index']);
+Route::get('/full_image/{img}', [MainController::class, 'show']);
+
+Route::get('/about', function () {
+    return view('main/about');
 });
-Route::get('/main', function () {
-    return view('main');
+Route::get('/contacts', function () {
+    
+	$array = [
+		'name' => 'Daniil Kolotygin',
+		'address' => 'Moscow-City',
+		'email' => 'daniil.kolotygyn856@gmail.com',
+		'phone' => '8(951)627-56-20',
+	];
+
+	return view('main/contacts', ['contacts' => $array]);
 });
