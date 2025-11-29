@@ -864,10 +864,10 @@
                         </li>
 
                     </ul>
-                    <form class="d-flex" role="search">
+                    <div class="d-flex">
 
-                        <button class="btn btn-outline-success" type="submit">Search</button>
-                    </form>
+                        <a href="/auth/signin" class="btn btn-outline-success">Sign in</a>
+                    </div>
                 </div>
             </div>
         </nav>
