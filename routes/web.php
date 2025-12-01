@@ -22,7 +22,14 @@ Route::resource('/article', ArticleController::class);
 
 //Auth
 Route::get('/auth/signin', [AuthController::class, 'signIn']);
+
+Route::get('/auth/login', [AuthController::class, 'login'])->name('login');
+
 Route::post('/auth/registr', [AuthController::class, 'registr']);
+
+Route::post('/auth/authenticate', [AuthController::class, 'authenticate']);
+
+Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
 
 // Main
