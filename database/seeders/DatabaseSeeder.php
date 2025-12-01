@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use App\Models\Comment;
 
 class DatabaseSeeder extends Seeder
 {
@@ -12,8 +13,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        \App\Models\Article::factory(11)->create();
         \App\Models\User::factory(11)->create();
+        \App\Models\Article::factory(11)->has(Comment::factory(3))->create();
 
         // \App\Models\User::factory()->create([
         //     'name' => 'Test User',
