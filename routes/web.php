@@ -18,7 +18,7 @@ use App\Http\Controllers\ArticleController;
 
 //Article
 
-Route::resource('/article', ArticleController::class);
+Route::resource('/article', ArticleController::class)->middleware('auth:sanctum');
 
 //Auth
 Route::get('/auth/signin', [AuthController::class, 'signIn']);

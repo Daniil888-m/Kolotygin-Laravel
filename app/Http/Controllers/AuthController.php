@@ -38,7 +38,7 @@ class AuthController extends Controller
             'password'=>'required|min:6'
         ]);
 
-        if(Auth::attempt($credentials)){
+        if(Auth::attempt($credentials, $request->remember)){
             $request->session()->regenerate();
             return redirect()->intended('/');
         }
@@ -46,18 +46,12 @@ class AuthController extends Controller
         return back()->withErrors([
             'email'=>'Предоставленные учетные данные не соответствуют нашим записям.',
         ])->onlyInput('email');
-    }  
-	
-		public function logout(Request $request)
-	{
-		Auth::logout();
+    }    
 
-		// Инвалидируем текущую сессию для безопасности
-		$request->session()->invalidate();
-
-		// Перегенерируем CSRF-токен
-		$request->session()->regenerateToken();
-
-		return redirect('/'); // Перенаправляем на главную или страницу входа
-	}
+    public function logout(Request $request){
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return  redirect()->route('login');
+    }
 }

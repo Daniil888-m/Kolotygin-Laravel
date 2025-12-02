@@ -40,7 +40,7 @@ class ArticleController extends Controller
 		$article->date_public = $request->date;
 		$article->title = request('title');
 		$article->text = $request->text;
-		$article->users_id = 1;
+		$article->users_id = auth()->id();
 		$article->save();
 
 		return redirect()->route('article.index')->with('message','Create successful');
