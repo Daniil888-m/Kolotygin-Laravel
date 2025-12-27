@@ -26,7 +26,6 @@ Route::resource('/article', ArticleController::class)->middleware('auth:sanctum'
 Route::middleware('auth')->group(function() {
     Route::post('/comment/store', [CommentController::class, 'store'])->name('comment.store');
     
-    // Новые маршруты
     Route::get('/comment/{comment}/edit', [CommentController::class, 'edit'])->name('comment.edit');
     Route::put('/comment/{comment}', [CommentController::class, 'update'])->name('comment.update');
     Route::delete('/comment/{comment}', [CommentController::class, 'destroy'])->name('comment.destroy');

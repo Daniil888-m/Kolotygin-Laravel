@@ -14,7 +14,7 @@
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 
     <!-- Styles -->
-    <style>
+    {{-- <style>
         /* ! tailwindcss v3.2.4 | MIT License | https://tailwindcss.com */
         *,
         ::after,
@@ -829,7 +829,7 @@
                 padding: 2rem
             }
         }
-    </style>
+    </style> --}}
 </head>
 
 <body>
@@ -847,14 +847,16 @@
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="/article">Article</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="/article/create">Create Article</a>
-                        </li>
+                        @can('moderator')
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="/article/create">Create Article</a>
+                            </li>
+                        @endcan
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="/about">About</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/contact">Contacts</a>
+                            <a class="nav-link" href="/contacts">Contacts</a>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"

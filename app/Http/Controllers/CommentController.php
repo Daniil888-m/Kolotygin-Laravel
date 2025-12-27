@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Comment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class CommentController extends Controller
 {
@@ -34,10 +35,12 @@ class CommentController extends Controller
 
 	public function edit(Comment $comment)
     {
-        // Проверка прав: редактировать может только автор
-        if ($comment->user_id != Auth::id()) {
-            return redirect()->back()->with('error', 'Вы не можете редактировать чужой комментарий');
-        }
+       
+        // if ($comment->user_id != Auth::id()) {
+        //     return redirect()->back()->with('error', 'Вы не можете редактировать чужой комментарий');
+        // }
+
+		Gate::authorize('comment', $comment);
 
         return view('comment.edit', ['comment' => $comment]);
     }
