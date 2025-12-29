@@ -91,19 +91,17 @@
             <a href="{{ route('article.index') }}" class="btn btn-secondary">Назад к статьям</a>
 
             @auth
-                @if (auth()->id() == $article->users_id)
-                    @can('moderator')
-                        <a href="{{ route('article.edit', $article->id) }}" class="btn btn-warning">Редактировать</a>
+                @can('moderator')
+                    <a href="{{ route('article.edit', $article->id) }}" class="btn btn-warning">Редактировать</a>
 
-                        <form action="{{ route('article.destroy', $article->id) }}" method="POST" style="display:inline;">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-danger" onclick="return confirm('Удалить статью?')">
-                                Удалить
-                            </button>
-                        </form>
-                    @endcan
-                @endif
+                    <form action="{{ route('article.destroy', $article->id) }}" method="POST" style="display:inline;">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger" onclick="return confirm('Удалить статью?')">
+                            Удалить
+                        </button>
+                    </form>
+                @endcan
             @endauth
         </div>
     </div>

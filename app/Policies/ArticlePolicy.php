@@ -6,7 +6,6 @@ use App\Models\Article;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
 
-
 class ArticlePolicy
 {
     /**
@@ -30,9 +29,9 @@ class ArticlePolicy
      */
     public function create(User $user)
     {
-        return $user->role == 'moderator'
-		? Response::allow()
-		: Response::deny('You are not moderator');
+        return ($user->role == "moderator")
+            ? Response::allow()
+            : Response::deny("Your don`t moderator");
     }
 
     /**
@@ -40,10 +39,9 @@ class ArticlePolicy
      */
     public function update(User $user, Article $article)
     {
-		return ($user->id == $article->users_id)
-		? Response::allow()
-		: Response::deny('You are not moderator');
-
+        return ($user->id == $article->users_id)
+            ? Response::allow()
+            : Response::deny("Your don`t moderator");
     }
 
     /**
@@ -51,28 +49,28 @@ class ArticlePolicy
      */
     public function delete(User $user, Article $article)
     {
-         return $user->role == 'moderator'
-		? Response::allow()
-		: Response::deny('You are not moderator');
+            return ($user->role == "moderator")
+                ? Response::allow()
+                : Response::deny("Your don`t moderator");
     }
 
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, Article $article): bool
+    public function restore(User $user, Article $article)
     {
-        return ($user->id == $article->users_id)
-		? Response::allow()
-		: Response::deny('You are not moderator');
+            return ($user->id == $article->users_id)
+                ? Response::allow()
+                : Response::deny("Your don`t moderator");
     }
 
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, Article $article): bool
+    public function forceDelete(User $user, Article $article)
     {
-        return ($user->id == $article->users_id)
-		? Response::allow()
-		: Response::deny('You are not moderator');
+            return ($user->id == $article->users_id)
+                ? Response::allow()
+                : Response::deny("Your don`t moderator");
     }
 }

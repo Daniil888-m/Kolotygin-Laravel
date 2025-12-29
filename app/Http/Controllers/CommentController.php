@@ -3,9 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Comment;
+use App\Models\Article;
+use App\Mail\Commentmail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Mail;
+
 
 class CommentController extends Controller
 {
@@ -21,11 +25,14 @@ class CommentController extends Controller
         ]);
 
         // Создаем комментарий
-        Comment::create([
+		$article = Article::FindOrFail($request->articles_id);
+        $comment = Comment::create([
     'text' => $request->text,
+	'article'=> $article,
     'articles_id' => $request->articles_id,
     'user_id' => Auth::id(), // Добавляем автора!
 ]);
+		Mail::to('daniil.kolotygin80@gmail.com')->send(new Commentmail($comment, $article));
 
         // Возвращаемся на страницу статьи с сообщением
         return redirect()
