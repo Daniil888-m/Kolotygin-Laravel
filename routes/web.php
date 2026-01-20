@@ -25,10 +25,15 @@ Route::resource('/article', ArticleController::class)->middleware('auth:sanctum'
 
 Route::middleware('auth')->group(function() {
     Route::post('/comment/store', [CommentController::class, 'store'])->name('comment.store');
+	// Route::get('/', 'index')->name('comment.index');
+	Route::get('/comment', [CommentController::class, 'index'])->name('comment.index');
     
     Route::get('/comment/{comment}/edit', [CommentController::class, 'edit'])->name('comment.edit');
     Route::put('/comment/{comment}', [CommentController::class, 'update'])->name('comment.update');
     Route::delete('/comment/{comment}', [CommentController::class, 'destroy'])->name('comment.destroy');
+
+	Route::get('/comment/accept/{comment}', [CommentController::class, 'accept']);
+    Route::get('/comment/reject/{comment}', [CommentController::class, 'reject']);
 });
 
 //Auth

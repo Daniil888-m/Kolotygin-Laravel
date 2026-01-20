@@ -13,6 +13,15 @@ use Illuminate\Support\Facades\Mail;
 
 class CommentController extends Controller
 {
+
+	public function index()
+{
+    $comments = Comment::with(['user', 'article'])
+        ->latest()
+        ->paginate(10);
+
+    return view('comment.index', ['comments' => $comments]);
+}
     /**
      * Сохранение нового комментария
      */
@@ -37,7 +46,7 @@ class CommentController extends Controller
         // Возвращаемся на страницу статьи с сообщением
         return redirect()
             ->route('article.show', $request->articles_id)
-            ->with('message', 'Комментарий добавлен!');
+            ->with('message', 'Комментарий отправлен на модерацию!');
     }
 
 	public function edit(Comment $comment)
@@ -50,6 +59,18 @@ class CommentController extends Controller
 		Gate::authorize('comment', $comment);
 
         return view('comment.edit', ['comment' => $comment]);
+    }
+
+	public function accept(Comment $comment){
+        $comment->accept = true;
+        $comment->save();
+        return redirect()->route('comment.index');
+    }
+
+    public function reject(Comment $comment){
+        $comment->accept = false;
+        $comment->save();
+        return redirect()->route('comment.index');
     }
 
     /**
