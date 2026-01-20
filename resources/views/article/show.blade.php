@@ -16,14 +16,18 @@
 
         <!-- РАЗДЕЛ КОММЕНТАРИЕВ -->
         <div class="mt-5">
-            <h3>Комментарии ({{ $article->comments->count() }})</h3>
+            @php
+                $acceptedComments = $article->comments->where('accept', 1);
+            @endphp
 
-            @if ($article->comments->isEmpty())
+            <h3>Комментарии ({{ $acceptedComments->count() }})</h3>
+
+            @if ($acceptedComments->isEmpty())
                 <div class="alert alert-info">
                     Пока нет комментариев. Будьте первым!
                 </div>
             @else
-                @foreach ($article->comments as $comment)
+                @foreach ($acceptedComments as $comment)
                     <div class="card mb-3">
                         <div class="card-body">
                             <p class="mb-2">{{ $comment->text }}</p>
