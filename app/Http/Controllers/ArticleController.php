@@ -13,10 +13,17 @@ use Illuminate\Support\Facades\Cache;
 use App\Models\User;
 use App\Notifications\NewArticleNotification;
 use Illuminate\Support\Facades\Notification;
+use App\Http\Middleware\LogArticleView;
 
 
 class ArticleController extends Controller
 {
+
+public function __construct()
+    {
+        // middleware будет применяться ТОЛЬКО к методу show
+        $this->middleware(LogArticleView::class)->only('show');
+    }
     /**
      * Display a listing of the resource.
      */
