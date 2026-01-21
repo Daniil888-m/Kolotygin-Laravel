@@ -894,6 +894,7 @@
             @yield('content')
         </div>
     </main>
+    @vite(['resources/js/app.js'])
 </body>
 
 </html>

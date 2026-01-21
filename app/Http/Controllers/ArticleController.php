@@ -7,6 +7,7 @@ use App\Models\Comment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use App\Jobs\VeryLongJob;
+use App\Events\ArticleCreated;
 
 
 class ArticleController extends Controller
@@ -46,6 +47,9 @@ class ArticleController extends Controller
         $article->text = $request->text;
         $article->users_id = auth()->id();
         $article->save();
+		
+		event(new ArticleCreated($article));
+
 		VeryLongJob::dispatch($article);
         return redirect()->route('article.index')->with('message','Create successful');
     }
