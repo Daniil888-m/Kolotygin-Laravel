@@ -2,6 +2,16 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\API\ArticleController;
+
+Route::post('/login', [AuthController::class, 'login']);
+
+// защищённые роуты
+Route::middleware('auth:sanctum')->group(function () {
+    Route::post('/logout', [AuthController::class, 'logout']);
+    Route::apiResource('articles', ArticleController::class);
+});
 
 /*
 |--------------------------------------------------------------------------
