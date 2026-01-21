@@ -9,6 +9,10 @@ use Illuminate\Support\Facades\Gate;
 use App\Jobs\VeryLongJob;
 use App\Events\ArticleCreated;
 
+use App\Models\User;
+use App\Notifications\NewArticleNotification;
+use Illuminate\Support\Facades\Notification;
+
 
 class ArticleController extends Controller
 {
@@ -47,7 +51,10 @@ class ArticleController extends Controller
         $article->text = $request->text;
         $article->users_id = auth()->id();
         $article->save();
-		
+
+		$readers = User::where('id', '!=', auth()->id())->get();
+		Notification::send($readers, new NewArticleNotification($article));
+
 		event(new ArticleCreated($article));
 
 		VeryLongJob::dispatch($article);

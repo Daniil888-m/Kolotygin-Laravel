@@ -882,12 +882,36 @@
                             <a href="/auth/login" class="btn btn-outline-success">Sign In</a>
                         @endguest
                         @auth
+                            @php($unread = auth()->user()->unreadNotifications)
+                            <div style="position: relative; display: inline-block;">
+                                <button type="button" onclick="document.getElementById('notif').classList.toggle('show')">
+                                    🔔 ({{ $unread->count() }})
+                                </button>
+
+                                <div id="notif" class="dropdown">
+                                    @forelse($unread as $n)
+                                        <div>
+                                            <a href="{{ route('notifications.open', $n->id) }}">
+                                                {{ $n->data['title'] ?? 'Новая статья' }}
+                                            </a>
+                                        </div>
+                                    @empty
+                                        <div>Нет уведомлений</div>
+                                    @endforelse
+                                </div>
+                            </div>
+                        @endauth
+                        @auth
                             <a href="{{ route('logout') }}">Logout</a>
                         @endauth
                     </div>
                 </div>
+
             </div>
+
         </nav>
+
+
     </header>
     <main>
         <div class="container mt-5">

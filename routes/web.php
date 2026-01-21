@@ -35,6 +35,11 @@ Route::middleware('auth')->group(function() {
 	Route::get('/comment/accept/{comment}', [CommentController::class, 'accept']);
     Route::get('/comment/reject/{comment}', [CommentController::class, 'reject']);
 });
+// Notifications
+Route::get('/notifications/{id}', [\App\Http\Controllers\NotificationController::class, 'open'])
+    ->name('notifications.open')
+    ->middleware('auth');
+
 
 //Auth
 Route::get('/auth/signin', [AuthController::class, 'signIn']);
